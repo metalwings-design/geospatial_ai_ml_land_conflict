@@ -1,0 +1,29 @@
+# Large Data Files & Rasters
+data/raw/
+data/processed/
+data/patches/
+data/classified/
+data/classified_lgbm/
+data/classified_unet/
+*.tif
+*.tiff
+*.npy
+*.geojson
+
+# Heavy Model Artifacts
+models/*.pkl
+models/*.pth
+
+# Python Environment & Cache
+__pycache__/
+*.pyc
+venv/
+.env
+.DS_Store
+
+# IDE / Editor Files
+.vscode/
+.idea/
+
+# Private Notes
+private_notes_files/

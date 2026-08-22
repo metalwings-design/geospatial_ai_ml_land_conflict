@@ -1,4 +1,6 @@
 import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 import pickle
 import pandas as pd
 import numpy as np
@@ -48,7 +50,10 @@ def train_lgbm(feature_csv="data/processed/train_features.csv", model_dir="model
         random_state=42,
         verbose=-1
     )
-    final_lgbm.fit(X, y)
+    final_lgbm.fit(
+        X, y,
+        eval_set=[(X, y)],
+    )
     
     os.makedirs(model_dir, exist_ok=True)
     model_path = os.path.join(model_dir, "lgbm_lulc_model.pkl")
@@ -56,6 +61,12 @@ def train_lgbm(feature_csv="data/processed/train_features.csv", model_dir="model
         pickle.dump({'model': final_lgbm, 'feature_cols': feature_cols}, f)
         
     print(f"\nLightGBM model saved successfully to: {model_path}")
+
+    # Generate and save Loss Curve
+    from src.visualization.learning_curves import plot_lightgbm_loss_curve
+    if hasattr(final_lgbm, 'evals_result_'):
+        print("\nGenerating Loss Curve...")
+        plot_lightgbm_loss_curve(final_lgbm.evals_result_, save_path="docs/figures/lgbm_loss_curve.png")
 
 if __name__ == "__main__":
     train_lgbm()

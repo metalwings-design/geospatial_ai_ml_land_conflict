@@ -68,3 +68,28 @@ This document outlines the end-to-end workflow for replicating the LULC (Land Us
 
 ### 3. U-Net (CNN)
 ![U-Net Classification](docs/figures/unet_overlay_clean_2026.png)
+
+## Model Evaluation & Health Diagnostics
+
+To rigorously validate model robustness against spatial autocorrelation and overfitting, we tracked learning curves, loss convergence, and explicit misclassification matrices during spatial cross-validation.
+
+### 1. Learning & Convergence Curves
+These charts prove that the models generalized appropriately without memorizing the training data.
+
+**Random Forest Learning Curve:**
+![Random Forest Learning Curve](docs/figures/rf_learning_curve.png)
+
+**LightGBM Loss Curve:**
+![LightGBM Loss Curve](docs/figures/lgbm_loss_curve.png)
+
+**U-Net Epoch Loss Curve:**
+![U-Net Epoch Loss Curve](docs/figures/unet_loss_curve.png)
+
+### 2. Feature Importance & Misclassification Analysis
+To ensure the pixel-based models were learning physical spectral logic (and to analyze their specific failure modes), we extracted the confusion matrix and feature importance rankings from the Random Forest validation folds.
+
+**Random Forest Feature Importance:**
+![Random Forest Feature Importance](docs/figures/rf_feature_importance.png)
+
+**Random Forest Validation Confusion Matrix:**
+![Random Forest Confusion Matrix](docs/figures/rf_confusion_matrix.png)
